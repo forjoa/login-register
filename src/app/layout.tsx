@@ -29,16 +29,16 @@ export default function RootLayout({
               Home
             </Link>
             <Link
-              href='/login'
-              className='bg-blue-500 text-white py-2 px-4 rounded-md'
-            >
-              Login
-            </Link>
-            <Link
               href='/register'
               className='bg-slate-200 text-black py-2 px-4 rounded-md'
             >
               Register
+            </Link>
+            <Link
+              href='/login'
+              className='bg-blue-500 text-white py-2 px-4 rounded-md'
+            >
+              Login
             </Link>
           </div>
         </header>
