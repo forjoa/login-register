@@ -24,19 +24,19 @@ export default function RootLayout({
           <div className='options-container flex gap-5'>
             <Link
               href='/'
-              className='bg-slate-100 text-black py-2 px-4 rounded-md'
+              className='underline'
             >
               Home
             </Link>
             <Link
               href='/register'
-              className='bg-slate-200 text-black py-2 px-4 rounded-md'
+              className='underline'
             >
               Register
             </Link>
             <Link
               href='/login'
-              className='bg-blue-500 text-white py-2 px-4 rounded-md'
+              className='underline'
             >
               Login
             </Link>
