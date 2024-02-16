@@ -20,7 +20,6 @@ export default function RootLayout({
       <body className={inter.className}>
         {' '}
         <header className='mx-auto my-10 w-1/2'>
-          <h1>Select an option:</h1>
           <div className='options-container flex gap-5'>
             <Link
               href='/'
