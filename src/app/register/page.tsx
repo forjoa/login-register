@@ -13,31 +13,53 @@ const Register = () => {
       <form>
         <label htmlFor='username'>Username</label>
         <br />
-        <input type='text' name='username' id='username' spellCheck='false' />
+        <input
+          type='text'
+          name='username'
+          id='username'
+          spellCheck='false'
+          className='border-2 rounded-md p-2 outline-none'
+        />
 
         <br />
         <br />
 
         <label htmlFor='email'>Email</label>
         <br />
-        <input type='email' name='email' id='email' autoComplete='email' />
+        <input
+          type='email'
+          name='email'
+          id='email'
+          autoComplete='email'
+          className='border-2 rounded-md p-2 outline-none'
+        />
 
         <br />
         <br />
 
         <label htmlFor='password'>Password</label>
         <br />
+        <div className='pwd container flex'>
+          <input
+            type={lock ? 'password' : 'text'}
+            name='password'
+            id='password'
+            className='border-2 rounded-md p-2 outline-none'
+          />
+          <Image
+            src={lock ? lockI : unlock}
+            alt='Locked or unlocked'
+            onClick={() => setLock(!lock)}
+          ></Image>
+        </div>
+
+        <br />
+
         <input
-          type={lock ? 'password' : 'text'}
-          name='password'
-          id='password'
+          type='submit'
+          value='Register'
+          className='bg-blue-500 text-white py-2 px-4 rounded-md'
         />
-        <Image src={lock ? lockI : unlock} alt='Locked or unlocked' onClick={() => setLock(!lock)}></Image>
-
-        <br />
-        <br />
-
-        <input type='submit' value='Register' />
       </form>
     </main>
   )
