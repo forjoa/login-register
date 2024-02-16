@@ -2,6 +2,10 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Link from 'next/link'
+import Image from 'next/image'
+import homeIcon from '@/assets/home.svg'
+import loginIcon from '@/assets/login.svg'
+import signUpIcon from '@/assets/signUp.svg'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,23 +24,16 @@ export default function RootLayout({
       <body className={inter.className}>
         {' '}
         <header className='mx-auto my-10 w-1/2'>
-          <div className='options-container flex gap-5'>
-            <Link
-              href='/'
-              className='underline'
-            >
-              Home
+          <div className='options-container flex justify-between'>
+            <Link href='/' className='underline flex gap-1'>
+              <Image src={homeIcon} alt='Home icon' /> Home
             </Link>
-            <Link
-              href='/register'
-              className='underline'
-            >
+            <Link href='/register' className='underline flex gap-1'>
+              <Image src={signUpIcon} alt='Register icon' />
               Register
             </Link>
-            <Link
-              href='/login'
-              className='underline'
-            >
+            <Link href='/login' className='underline flex gap-1'>
+              <Image src={loginIcon} alt='Login icon' />
               Login
             </Link>
           </div>
