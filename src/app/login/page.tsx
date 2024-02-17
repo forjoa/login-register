@@ -3,6 +3,7 @@ import { useState } from 'react'
 import lockI from '@/assets/lock.svg'
 import unlock from '@/assets/unlock.svg'
 import Image from 'next/image'
+import { submitLogin } from '@/lib/handlers'
 
 const Login = () => {
   const [lock, setLock] = useState<boolean>(true)
@@ -10,7 +11,9 @@ const Login = () => {
   return (
     <main className='mx-auto w-1/2'>
       <h1>Login</h1>
-      <form>
+      <form
+        action={submitLogin}
+      >
         <label htmlFor='email'>Email</label>
         <br />
         <input
