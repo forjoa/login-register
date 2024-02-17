@@ -4,17 +4,17 @@ import Image from 'next/image'
 import homeIcon from '@/assets/home.svg'
 import loginIcon from '@/assets/login.svg'
 import signUpIcon from '@/assets/signUp.svg'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 
 const Header = () => {
-  const router = useRouter()
+  const router = usePathname()
 
   return (
     <header className='mx-auto my-10 w-1/2'>
       <div className='options-container flex justify-between'>
         <Link
           href='/'
-          className={`flex gap-1 ${router.pathname === '/' && 'text-blue-500'}`}
+          className={`flex gap-1 ${router === '/' ? 'text-black underline' : 'text-gray-500'}`}
         >
           {' '}
           <Image src={homeIcon} alt='Home icon' /> Home
@@ -22,7 +22,7 @@ const Header = () => {
         <Link
           href='/register'
           className={`flex gap-1 ${
-            router.pathname === '/register' && 'text-blue-500'
+            router === '/register' ? 'text-black underline' : 'text-gray-500'
           }`}
         >
           <Image src={signUpIcon} alt='Register icon' />
@@ -31,7 +31,7 @@ const Header = () => {
         <Link
           href='/login'
           className={`flex gap-1 ${
-            router.pathname === '/login' && 'text-blue-500'
+            router === '/login' ? 'text-black underline' : 'text-gray-500'
           }`}
         >
           <Image src={loginIcon} alt='Login icon' />
