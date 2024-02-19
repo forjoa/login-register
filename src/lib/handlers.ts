@@ -4,6 +4,5 @@ import { login } from "./lib"
 
 export const submitLogin = async (formData: FormData) => {
     await login(formData)
-    redirect('/')
-  
+    redirect('/login')
 }

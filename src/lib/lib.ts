@@ -1,7 +1,8 @@
-'use client'
 import { SignJWT, jwtVerify } from 'jose'
 import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
+import bcrypt from 'bcrypt'
+import { supabase } from './supabase'
 
 const secretKey = 'secret'
 const key = new TextEncoder().encode(secretKey)
@@ -26,39 +27,44 @@ export async function login(formData: FormData) {
     email: formData.get('email'),
     password: formData.get('password'),
   }
-
-  console.log(user)
+  console.log((await supabase.from('users').select()).data)
 
   // create session
-  const session = await encrypt({ user })
+  const expires = new Date(Date.now() + 10 * 10000)
+  const session = await encrypt({ user, expires })
 
-  // save session in localStorage
-  localStorage.setItem('session', session)
+  // save session in a cookie
+  cookies().set('session', session, { expires, httpOnly: true })
 }
 
 export async function logout() {
   // destroy the session
-  localStorage.removeItem('session')
+  cookies().set('session', '', { expires: new Date(0) })
 }
 
 export async function getSession() {
-  const session = localStorage.getItem('session')
+  const session = cookies().get('session')?.value
   if (!session) return null
   return await decrypt(session)
 }
 
 export async function updateSession(request: NextRequest) {
-  const session = localStorage.getItem('session')
+  const session = request.cookies.get('session')?.value
   if (!session) return
 
   // refresh the session so it doesn't expire
   const parsed = await decrypt(session)
+  parsed.expires = new Date(Date.now() + 10 * 1000)
   const res = NextResponse.next()
   res.cookies.set({
     name: 'session',
     value: await encrypt(parsed),
     httpOnly: true,
-    expires: parsed.expires, // Note: this line might not be needed anymore
+    expires: parsed.expires,
   })
   return res
+}
+
+export async function hashPasswords(password: string) : Promise<string> {
+  return await bcrypt.hash(password, 10)
 }
