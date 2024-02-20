@@ -28,6 +28,8 @@ export async function login(formData: FormData) {
     password: formData.get('password'),
   }
 
+  const { data, error } = await supabase.from('users').select().eq('email', user.email)
+
   // create session
   const expires = new Date(Date.now() + 10 * 10000)
   const session = await encrypt({ user, expires })
@@ -49,4 +51,15 @@ export async function getSession() {
 
 export async function hashPasswords(password: string): Promise<string> {
   return await bcrypt.hash(password, 10)
+}
+
+export async function register (formData: FormData) {
+  const user = {
+    fullname: formData.get('name'),
+    username: formData.get('username'),
+    email: formData.get('email'),
+    password: await hashPasswords(formData.get('password') as string)
+  }
+  
+  const { error } = await supabase.from('users').insert(user)
 }
