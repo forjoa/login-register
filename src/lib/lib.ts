@@ -31,7 +31,7 @@ export async function login(formData: FormData) {
   // create session
   const expires = new Date(Date.now() + 10 * 10000)
   const session = await encrypt({ user, expires })
-  
+
   // save session in a cookie
   cookies().set('session', session, { expires, httpOnly: true })
 }
@@ -45,23 +45,6 @@ export async function getSession() {
   const session = cookies().get('session')?.value
   if (!session) return null
   return await decrypt(session)
-}
-
-export async function updateSession(request: NextRequest) {
-  const session = request.cookies.get('session')?.value
-  if (!session) return
-
-  // refresh the session so it doesn't expire
-  const parsed = await decrypt(session)
-  parsed.expires = new Date(Date.now() + 10 * 1000)
-  const res = NextResponse.next()
-  res.cookies.set({
-    name: 'session',
-    value: await encrypt(parsed),
-    httpOnly: true,
-    expires: parsed.expires,
-  })
-  return res
 }
 
 export async function hashPasswords(password: string): Promise<string> {
