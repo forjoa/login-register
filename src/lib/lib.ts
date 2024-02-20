@@ -27,12 +27,11 @@ export async function login(formData: FormData) {
     email: formData.get('email'),
     password: formData.get('password'),
   }
-  console.log((await supabase.from('users').select()).data)
 
   // create session
   const expires = new Date(Date.now() + 10 * 10000)
   const session = await encrypt({ user, expires })
-
+  
   // save session in a cookie
   cookies().set('session', session, { expires, httpOnly: true })
 }
@@ -65,6 +64,6 @@ export async function updateSession(request: NextRequest) {
   return res
 }
 
-export async function hashPasswords(password: string) : Promise<string> {
+export async function hashPasswords(password: string): Promise<string> {
   return await bcrypt.hash(password, 10)
 }
