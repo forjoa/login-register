@@ -28,10 +28,18 @@ export async function login(formData: FormData) {
     password: formData.get('password'),
   }
 
-  const { data, error } = await supabase.from('users').select().eq('email', user.email)
+  const { data } = await supabase.from('users').select().eq('email', user.email)
+
+  if (data?.length !== 1) {
+    return { message: 'Email is not registered' }
+  }
+
+  if (!(await bcrypt.compare(user.password as string, data[0].password))) {
+    return { message: 'Wrong password' }
+  }
 
   // create session
-  const expires = new Date(Date.now() + 10 * 10000)
+  const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
   const session = await encrypt({ user, expires })
 
   // save session in a cookie
@@ -53,13 +61,13 @@ export async function hashPasswords(password: string): Promise<string> {
   return await bcrypt.hash(password, 10)
 }
 
-export async function register (formData: FormData) {
+export async function register(formData: FormData) {
   const user = {
     fullname: formData.get('name'),
     username: formData.get('username'),
     email: formData.get('email'),
-    password: await hashPasswords(formData.get('password') as string)
+    password: await hashPasswords(formData.get('password') as string),
   }
-  
+
   const { error } = await supabase.from('users').insert(user)
 }
