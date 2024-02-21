@@ -4,7 +4,9 @@ import Image from 'next/image'
 import homeIcon from '@/assets/home.svg'
 import loginIcon from '@/assets/login.svg'
 import signUpIcon from '@/assets/signUp.svg'
+import logoutIcon from '@/assets/logout.svg'
 import { usePathname } from 'next/navigation'
+import { logout } from '@/lib/lib'
 
 const Header = () => {
   const router = usePathname()
@@ -14,7 +16,9 @@ const Header = () => {
       <div className='options-container flex justify-between'>
         <Link
           href='/'
-          className={`flex gap-1 ${router === '/' ? 'text-black underline' : 'text-gray-500'}`}
+          className={`flex gap-1 ${
+            router === '/' ? 'text-black underline' : 'text-gray-500'
+          }`}
         >
           {' '}
           <Image src={homeIcon} alt='Home icon' /> Home
@@ -36,6 +40,10 @@ const Header = () => {
         >
           <Image src={loginIcon} alt='Login icon' />
           Login
+        </Link>
+        <Link href='/' className='flex gap-1 text-customRed'>
+          <Image src={logoutIcon} alt='Logout icon'></Image>
+          Logout
         </Link>
       </div>
     </header>
