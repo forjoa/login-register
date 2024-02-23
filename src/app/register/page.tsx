@@ -1,12 +1,7 @@
-'use client'
-import { useState } from 'react'
-import lockI from '@/assets/lock.svg'
-import unlock from '@/assets/unlock.svg'
-import Image from 'next/image'
 import { submitRegister } from '@/lib/handlers'
+import PasswordInput from '@/components/PasswordInput'
 
 const Register = () => {
-  const [lock, setLock] = useState<boolean>(true)
 
   return (
     <main className='mx-auto w-1/2'>
@@ -55,21 +50,7 @@ const Register = () => {
 
         <label htmlFor='password'>Password</label>
         <br />
-        <div className='pwd container flex'>
-          <input
-            type={lock ? 'password' : 'text'}
-            name='password'
-            id='password'
-            autoComplete='current-password'
-            className='border-2 rounded-md p-2 outline-none'
-          />
-          <Image
-            src={lock ? lockI : unlock}
-            alt='Locked or unlocked'
-            className='w-auto h-auto'
-            onClick={() => setLock(!lock)}
-          ></Image>
-        </div>
+        <PasswordInput/>
 
         <br />
 
